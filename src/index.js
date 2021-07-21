@@ -94,6 +94,46 @@ class App extends Component {
     if (this.state.editorState) {
       var contentRaw = convertToRaw(this.state.editorState.getCurrentContent());
       console.log('contentState', contentRaw)
+      let aa = {
+        "entityMap": {
+          "0": {
+            "type": "COMMENT",
+            "mutability": "MUTABLE",
+            "data": [{
+              "value": "test"
+            },
+            {
+              "value": "test1"
+            }]
+          }
+        },
+        "blocks": [
+          {
+            "key": "b2jg9",
+            "text": "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc",
+            "type": "unstyled",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [
+              {
+                "offset": 725,
+                "length": 14,
+                "key": 0
+              }
+            ],
+            "data": {}
+          },
+          {
+            "key": "32us2",
+            "text": "            ",
+            "type": "unstyled",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [],
+            "data": {}
+          }
+        ]
+      }
       sessionStorage.setItem('user', JSON.stringify(contentRaw));
     }
   }
@@ -182,7 +222,7 @@ class App extends Component {
           ContentState.createFromText(
             `There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc
             `,
-          ),decoratorObj
+          ), decoratorObj
         )
       })
       console.log('else', this.state.editorState)
@@ -295,7 +335,7 @@ class App extends Component {
             onClose={this._onCommentInputClose}
           />
         )}
-        <button onClick={() => { this.handleSubmit(contentState) }}>Save</button>
+        <ToolbarButton onClick={() => { this.handleSubmit(contentState) }}>Save</ToolbarButton>
         <pre>{JSON.stringify(convertToRaw(contentState), null, 2)}</pre>
         <pre>{JSON.stringify(contentState)}</pre>
         <CommentButton

@@ -19,7 +19,7 @@ export default Comment;
 
 const Content = styled.span`
   cursor: pointer;
-  background-color: #ffedf2;
+  background-color: #dad8ac;
 `;
 
 const Stack = styled.span`

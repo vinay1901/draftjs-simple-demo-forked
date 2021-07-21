@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import ToolbarButton from '../components/ToolbarButton';
 
 export default class extends Component {
+
   componentDidMount() {
     const {
       position: { left },
@@ -13,15 +14,20 @@ export default class extends Component {
       ? bodyPosition.width - this.container.offsetWidth - 16
       : left
       }px`;
-
-    setTimeout(() => this.input.focus(), 0);
+    if (this.input) {
+      setTimeout(() => this.input.focus(), 100);
+    }
+    console.log('commentsListcommentsList', this.props.commentsList)
   }
+
+
   render() {
     const {
       position: { top, height },
       value,
       placeholder,
       onKeyDown,
+      commentsList,
       onChange,
       onClickRemove,
       enableRemove,
@@ -33,15 +39,20 @@ export default class extends Component {
           top: top + height + window.scrollY,
         }}
       >
-        <Input
-          innerRef={input => (this.input = input)}
-          type="input"
-          value={value}
-          placeholder={placeholder}
-          // onKeyDown={onKeyDown}
-          onChange={onChange}
-          spellCheck={false}
-        /><div style={{ display: 'flex', paddingTop: '15px' }}>
+        {commentsList && commentsList.map((ele, i) => {
+          return (
+            <Input
+              innerRef={input => (this.input = input)}
+              type="input"
+              value={ele.value}
+              placeholder={placeholder}
+              // onKeyDown={onKeyDown}
+              onChange={(e) => onChange(e, i)}
+              spellCheck={false}
+            />
+          )
+        })}
+        <div style={{ display: 'flex', paddingTop: '15px' }}>
           {enableRemove && (
             <div>
               <ToolbarButton onClick={onClickRemove}>Remove</ToolbarButton>

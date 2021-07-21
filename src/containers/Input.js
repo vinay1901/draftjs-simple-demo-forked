@@ -20,23 +20,30 @@ export default onClickOutside(
       position: PropTypes.object,
       placeholder: PropTypes.string,
       onChange: PropTypes.func,
-      onClose: PropTypes.func
+      onClose: PropTypes.func,
+      commentsList: PropTypes.array
     };
     constructor(props) {
       super();
       const { entityType, editorState } = props;
+      console.log('entityType', entityType, editorState)
       this.entity = findEntityInSelection(editorState, entityType);
       this.state = {
+        commentsList: [],
         value: this.entity !== null ? this.entity.entity.data.value : ""
       };
     }
     componentWillMount() {
+      this.handleAdd();
       const { entityType, editorState, onChange } = this.props;
+
       if (this.entity !== null) {
         this.editorStateBackup = extendSelectionByData(
           editorState,
           getEntities(editorState, entityType, this.entity.entityKey)
         );
+        console.log('this.editorStateBackup ', this.editorStateBackup, this.entity.entity.data)
+        this.setState({ commentsList: this.entity.entity.data })
       } else {
         this.editorStateBackup = editorState;
       }
@@ -46,26 +53,49 @@ export default onClickOutside(
     componentWillUnmount() {
       this.props.onChange(this.editorStateBackup);
     }
+
+    handleAdd() {
+      let array = this.state.commentsList;
+      array.push({ value: '' })
+      this.setState({ commentsList: array })
+      console.log('commentsList', this.state.commentsList)
+      // commentsType.comments = this.state.commentsList;
+    }
+
+    // handleInputVlaueChange (e ) {
+    //   console.log(e.target.value)
+    // }
+
+    handleRemove(e) {
+      let tempArray = this.state.commentsList;
+      tempArray.splice(tempArray.indexOf(e), 1);
+      this.setState({ commentsList: tempArray })
+
+    }
+
     handleClickOutside = () => {
       this.props.onClose();
     };
     applyValue = e => {
       // if (e.keyCode === 13) {
-        e.preventDefault();
-        console.log('aaaa',this.state.value)
-        const { value } = this.state;
-        const { entityType, onClose } = this.props;
-        const { contentState } = getEditorData(this.editorStateBackup);
-        if (this.entity === null) {
-          this.editorStateBackup = createEntity(
-            this.editorStateBackup,
-            entityType,
-            { value }
-          );
-        } else {
-          contentState.mergeEntityData(this.entity.entityKey, { value });
-        }
-        onClose();
+      e.preventDefault();
+      const { value } = this.state;
+      const { entityType, onClose } = this.props;
+      const { contentState } = getEditorData(this.editorStateBackup);
+      if (this.entity === null) {
+        console.log('aaaa', value)
+        this.editorStateBackup = createEntity(
+          this.editorStateBackup,
+          entityType,
+          [{ value }]
+        );
+      } else {
+        console.log('value', this.state.commentsList)
+        
+        contentState.mergeEntityData(this.entity.entityKey, [this.state.commentsList]);
+      }
+      console.log('this.props.commentsList', this.state.commentsList)
+      onClose();
       // }
     };
     _onRemoveClick = () => {
@@ -73,17 +103,21 @@ export default onClickOutside(
       this.editorStateBackup = removeEntity(this.editorStateBackup, entityType);
       onClose();
     };
-    _onInputChange = e => {
-      console.log(e)
+    _onInputChange = (e, i) => {
+      console.log(e.target, i)
+
       this.setState({ value: e.target.value });
+      this.state.commentsList[i].value = e.target.value;
+
     };
     render() {
-      const { value } = this.state;
+      const { value, commentsList } = this.state;
       const { position, placeholder } = this.props;
       return (
         <Input
           position={position}
           value={value}
+          commentsList={commentsList}
           placeholder={placeholder}
           onKeyDown={this.applyValue}
           onChange={this._onInputChange}
