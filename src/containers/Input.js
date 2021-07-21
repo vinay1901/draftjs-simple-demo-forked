@@ -50,8 +50,9 @@ export default onClickOutside(
       this.props.onClose();
     };
     applyValue = e => {
-      if (e.keyCode === 13) {
+      // if (e.keyCode === 13) {
         e.preventDefault();
+        console.log('aaaa',this.state.value)
         const { value } = this.state;
         const { entityType, onClose } = this.props;
         const { contentState } = getEditorData(this.editorStateBackup);
@@ -65,7 +66,7 @@ export default onClickOutside(
           contentState.mergeEntityData(this.entity.entityKey, { value });
         }
         onClose();
-      }
+      // }
     };
     _onRemoveClick = () => {
       const { entityType, onClose } = this.props;
@@ -73,6 +74,7 @@ export default onClickOutside(
       onClose();
     };
     _onInputChange = e => {
+      console.log(e)
       this.setState({ value: e.target.value });
     };
     render() {

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
 import ToolbarButton from '../components/ToolbarButton';
 
 export default class extends Component {
@@ -10,11 +9,10 @@ export default class extends Component {
       position: { left },
     } = this.props;
     const bodyPosition = document.body.getBoundingClientRect();
-    this.container.style.left = `${
-      left + this.container.offsetWidth > bodyPosition.width
-        ? bodyPosition.width - this.container.offsetWidth - 16
-        : left
-    }px`;
+    this.container.style.left = `${left + this.container.offsetWidth > bodyPosition.width
+      ? bodyPosition.width - this.container.offsetWidth - 16
+      : left
+      }px`;
 
     setTimeout(() => this.input.focus(), 0);
   }
@@ -40,13 +38,16 @@ export default class extends Component {
           type="input"
           value={value}
           placeholder={placeholder}
-          onKeyDown={onKeyDown}
+          // onKeyDown={onKeyDown}
           onChange={onChange}
           spellCheck={false}
-        />
-        {enableRemove && (
-          <ToolbarButton onClick={onClickRemove}>Remove</ToolbarButton>
-        )}
+        /><div style={{ display: 'flex', paddingTop: '15px' }}>
+          {enableRemove && (
+            <div>
+              <ToolbarButton onClick={onClickRemove}>Remove</ToolbarButton>
+            </div>
+          )}
+          <div style={{ paddingLeft: '5px' }}><ToolbarButton onClick={onKeyDown}>Submit</ToolbarButton></div></div>
       </Container>
     );
   }
@@ -71,9 +72,9 @@ export default class extends Component {
     },
     value: '',
     placeholder: '',
-    onKeyDown: () => {},
-    onChange: () => {},
-    onClickRemove: () => {},
+    onKeyDown: () => { },
+    onChange: () => { },
+    onClickRemove: () => { },
     enabledRemove: false,
   };
 }
@@ -81,11 +82,13 @@ export default class extends Component {
 const Container = styled.div`
   display: flex;
   flex-direction: row;
-  background-color: #333;
+  background-color: #fff;
   border: 1px solid #eee;
   border-radius: 5px;
   padding: 0.5rem;
   position: absolute;
+  box-shadow: 0 0 0 1px #dadce0;
+  display: block;
 `;
 
 const Input = styled.input`
@@ -94,7 +97,9 @@ const Input = styled.input`
   font-family: system-ui;
   font-size: 0.8rem;
   font-weight: 100;
-  color: white;
-  border: 0;
+  color: black;
+  padding: 6px;
+  border-radius: 5px;
+  border: 1px solid grey;
   outline: none;
 `;

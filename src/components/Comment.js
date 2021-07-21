@@ -23,6 +23,7 @@ const Content = styled.span`
 `;
 
 const Stack = styled.span`
+  display: none;
   color: #ec5f67;
   font-size: 0.6rem;
   margin-top: -10px;

@@ -34,7 +34,7 @@ const ToolbarButton = styled.div`
   cursor: pointer;
   display: inline-block;
   padding: 0.5rem 1rem;
-  background: #333;
+  background: #504cad;;
   color: #eee;
   font-family: system-ui;
   font-size: 0.8rem;
