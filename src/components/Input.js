@@ -20,6 +20,11 @@ export default class extends Component {
     console.log('commentsListcommentsList', this.props.commentsList)
   }
 
+  handleAddComment(val) {
+    console.log('aaaa')
+    this.props.commentsList.push({ value: '' })
+  }
+
 
   render() {
     const {
@@ -52,6 +57,7 @@ export default class extends Component {
             />
           )
         })}
+        <button onClick={() => this.handleAddComment(commentsList)}>add</button>
         <div style={{ display: 'flex', paddingTop: '15px' }}>
           {enableRemove && (
             <div>
