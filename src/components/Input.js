@@ -18,12 +18,12 @@ export default class extends Component {
       setTimeout(() => this.input.focus(), 100);
     }
     console.log('commentsListcommentsList', this.props.commentsList)
-  } 
-
-  handleAddComment(val) {
-    console.log('aaaa')
-    this.props.commentsList.push({ value: '' })
   }
+
+  // handleAddComment(val) {
+  //   console.log('aaaa')
+  //   this.props.commentsList.push({ value: '' })
+  // }
 
 
 
@@ -32,6 +32,7 @@ export default class extends Component {
       position: { top, height },
       value,
       placeholder,
+      handleAddComment,
       onKeyDown,
       commentsList,
       onChange,
@@ -47,18 +48,24 @@ export default class extends Component {
       >
         {commentsList && commentsList.map((ele, i) => {
           return (
-            <Input
-              innerRef={input => (this.input = input)}
-              type="input"
-              value={ele.value}
-              placeholder={placeholder}
-              // onKeyDown={onKeyDown}
-              onChange={(e) => onChange(e, i)}
-              spellCheck={false}
-            />
+            <div style={{ marginTop: '10px' }}>
+              <Input
+                innerRef={input => (this.input = input)}
+                type="input"
+                value={ele.value}
+                placeholder={placeholder}
+                // onKeyDown={onKeyDown}
+                onChange={(e) => onChange(e, i)}
+                spellCheck={false}
+              />
+            </div>
           )
         })}
-        <button onClick={() => this.handleAddComment(commentsList)}>add</button>
+        {enableRemove && (
+          <div style={{ marginTop: '15px' }}>
+            <ToolbarButton onClick={handleAddComment}>reply</ToolbarButton>
+          </div>
+        )}
         <div style={{ display: 'flex', paddingTop: '15px' }}>
           {enableRemove && (
             <div>
@@ -81,6 +88,7 @@ export default class extends Component {
     onChange: PropTypes.func,
     onClickRemove: PropTypes.func,
     enabledRemove: PropTypes.bool,
+    handleAddComment: PropTypes.func,
   };
   static defaultProps = {
     position: {
@@ -90,6 +98,7 @@ export default class extends Component {
     },
     value: '',
     placeholder: '',
+    handleAddComment: () => { },
     onKeyDown: () => { },
     onChange: () => { },
     onClickRemove: () => { },

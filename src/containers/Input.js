@@ -91,13 +91,16 @@ export default onClickOutside(
         );
       } else {
         console.log('value', this.state.commentsList)
-        
+
         contentState.replaceEntityData(this.entity.entityKey, this.state.commentsList);
       }
       console.log('this.props.commentsList', this.state.commentsList)
       onClose();
       // }
     };
+    handleAddComment = () => {
+      this.handleAdd();
+    }
     _onRemoveClick = () => {
       const { entityType, onClose } = this.props;
       this.editorStateBackup = removeEntity(this.editorStateBackup, entityType);
@@ -118,6 +121,7 @@ export default onClickOutside(
           position={position}
           value={value}
           commentsList={commentsList}
+          handleAddComment={this.handleAddComment}
           placeholder={placeholder}
           onKeyDown={this.applyValue}
           onChange={this._onInputChange}
