@@ -18,12 +18,13 @@ export default class extends Component {
       setTimeout(() => this.input.focus(), 100);
     }
     console.log('commentsListcommentsList', this.props.commentsList)
-  }
+  } 
 
   handleAddComment(val) {
     console.log('aaaa')
     this.props.commentsList.push({ value: '' })
   }
+
 
 
   render() {

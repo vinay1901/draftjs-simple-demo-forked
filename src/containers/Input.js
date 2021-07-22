@@ -92,7 +92,7 @@ export default onClickOutside(
       } else {
         console.log('value', this.state.commentsList)
         
-        contentState.mergeEntityData(this.entity.entityKey, [this.state.commentsList]);
+        contentState.replaceEntityData(this.entity.entityKey, this.state.commentsList);
       }
       console.log('this.props.commentsList', this.state.commentsList)
       onClose();
